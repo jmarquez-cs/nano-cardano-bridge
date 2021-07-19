@@ -38,7 +38,7 @@ services:
     volumes:
       - nanod:/root
       # - type: bind
-      #   source: ${PWD}/configuration/nano
+      #   source: ${PWD}/configuration/nano/config-rpc.toml
       #   target: /root
       #   read_only: true
       
