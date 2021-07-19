@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  bitcoind:
+    image: inputoutput/cardano-node:1.27.0  # https://hub.docker.com/r/inputoutput/cardano-node
+    # command:
+      # - 
+    container_name: cardanod
+    environment:
+      - NETWORK=mainnet                     # Does not require: configuration.yaml, genesis.json, topology.json
+    # expose:
+    #   - 'xxxxx'                           # Only be accessible to linked services – not accessible from outside world
+    networks:
+      default:
+    # ports: ['8080:8080']                  # Direct access to the container on <port>
+    # restart: always
+    volumes:
+      - cardanod:/data
+      - node-ipc:/ipc                       # Used for establishing cross-container communication via "node.socket"
+      # - type: bind
+      #   source: ${PWD}/configuration/configuration.yaml
+      #   target: /configuration
+      #   read_only: true
+networks:
+  default:
+
+volumes:
+  cardanod:
+  node-ipc:
+  
