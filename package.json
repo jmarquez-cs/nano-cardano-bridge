@@ -1,0 +1,27 @@
+{
+  "name": "nano-cardano-bridge",
+  "version": "1.0.0",
+  "description": "nano-cardano-bridge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ScooterHelmet/nano-cardano-bridge.git"
+  },
+  "keywords": [
+    "bridge"
+  ],
+  "author": "John Marquez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ScooterHelmet/nano-cardano-bridge/issues"
+  },
+  "homepage": "https://github.com/ScooterHelmet/nano-cardano-bridge#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^4.6.0"
+  }
+}
