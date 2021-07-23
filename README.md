@@ -6,3 +6,7 @@ nano-cardano-bridge
 | POST | http://localhost:80/hook| TBD | node app
 | POST | http://localhost:8080/api/pay | TBD | accept-nano
 | POST | http://localhost:8080/api/verify | TBD | accept-nano
+
+
+### Resource(s)
+- [NANO Faucet](https://nanodrop.io/)
