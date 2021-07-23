@@ -1,5 +1,0 @@
-[rpc]
-
-# Enable or disable RPC
-# type:bool
-enable = true

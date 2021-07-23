@@ -1,51 +1,63 @@
 version: '3'
 
 services:
-  cardanod:
-    image: inputoutput/cardano-node:1.27.0  # https://hub.docker.com/r/inputoutput/cardano-node
-    # command:
-      # - 
-    container_name: cardanod
-    environment:
-      - NETWORK=mainnet                     # Does not require: configuration.yaml, genesis.json, topology.json
-    # expose:
-    #   - 'xxxxx'                           # Only be accessible to linked services – not accessible from outside world
-    networks:
-      default:
-    # ports: ['8080:8080']                  # Direct access to the container on <port>
-    restart: unless-stopped
-    volumes:
-      - cardanod:/data
-      - node-ipc:/ipc                       # Used for establishing cross-container communication via "node.socket"
-      # - type: bind
-      #   source: ${PWD}/configuration/cardano/configuration.yaml
-      #   target: /configuration
-      #   read_only: true
+  # cardanod:
+  #   image: inputoutput/cardano-node:1.27.0  # https://hub.docker.com/r/inputoutput/cardano-node
+  #   # command:
+  #     # - 
+  #   container_name: cardanod
+  #   environment:
+  #     - NETWORK=mainnet                     # Does not require: configuration.yaml, genesis.json, topology.json
+  #   # expose:
+  #   #   - 'xxxxx'                           # Only be accessible to linked services – not accessible from outside world
+  #   networks:
+  #     default:
+  #   # ports: ['8080:8080']                  # Direct access to the container on <port>
+  #   restart: unless-stopped
+  #   volumes:
+  #     - cardanod:/data
+  #     - node-ipc:/ipc                       # Used for establishing cross-container communication via "node.socket"
+  #     # - type: bind
+  #     #   source: ${PWD}/cardano/configuration.yaml
+  #     #   target: /configuration
+  #     #   read_only: true
       
   nanod:
-    image: nanocurrency/nano-test:V22.1     # https://docs.nano.org/running-a-node/node-setup/#step-2-pull-the-docker-image
-    # command:
-      # -
-    container_name: nanod                   # https://docs.nano.org/running-a-node/node-setup/#step-3-start-the-node
-    # environment: 
-    #   - 
-    # expose:
-      # - 'xxxx'
+    image: nanocurrency/nano:V22.1            # https://docs.nano.org/running-a-node/node-setup/#step-2-pull-the-docker-image
+    container_name: nanod                     # https://docs.nano.org/running-a-node/node-setup/#step-3-start-the-node
+    environment:
+      - TERM=xterm
+    hostname: nano_node_1
     networks: 
       default:
-    ports: ['17075:17075', '17076:17076', '17077:17077', '17078:17078'] # https://docs.nano.org/running-a-node/node-setup/#configure-network-ports
+    # ports: ['17075:17075','17076:17076','17077:17077','17078:17078']    # https://docs.nano.org/running-a-node/node-setup/#configure-network-ports
+    ports: ['7075:7075/udp','7075:7075','::1:7076:7076','::1:7078:7078']  # mainnet
     restart: unless-stopped
     volumes:
       - nanod:/root
-      # - type: bind
-      #   source: ${PWD}/configuration/nano/config-rpc.toml
-      #   target: /root
-      #   read_only: true
+
+  accept-nano:
+    image: acceptnano/acceptnano:2.0.5       # https://github.com/accept-nano/accept-nano#config
+    container_name: accept-nano
+    depends_on: ['nanod']
+    environment:                             # https://github.com/accept-nano/accept-nano/blob/master/config.go
+      - ACCEPTNANO_Account=nano_1pw7z85h61p5d94cbbspdfrhfwyr4768gwi6xx7azpztd49p3k5tc9a74yf1
+      - ACCEPTNANO_NodeURL=http://nano_node_1:7076/   # Note: POST request to upgrades to websocket
+      - ACCEPTNANO_NotificationURL=http://localhost:80/
+      - ACCEPTNANO_NodeWebsocketURL=ws://nano_node_1:7078
+      - ACCEPTNANO_CoinmarketcapAPIKey=123ab456-cd78-90ef-ab12-34cd56ef7890
+    networks:
+      default:
+    ports: ['8080:8080']
+    restart: unless-stopped
+    volumes:
+      - accept-nano:/opt/data
       
 networks:
   default:
 
 volumes:
+  accept-nano:
   cardanod:
   nanod:
   node-ipc:

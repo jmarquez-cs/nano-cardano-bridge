@@ -1,0 +1,78 @@
+
+[admin]
+
+# If true, static files are available remotely, otherwise only to loopback.
+# type:bool
+#allow_remote = false
+
+# Enable or disable serving static files.
+# type:bool
+#enable = false
+
+# Path to static files, by default 'public' relative to working directory
+# type:string,path
+#path = "public"
+
+[device]
+
+# Device ID (gpu only)
+# type:uint64_t
+#device_id = 0
+
+# Maximum memory to allocate in MB
+# type:uint64_t
+#memory = 0
+
+# Platform ID (gpu only)
+# type:uint64_t
+#platform_id = 0
+
+# Number of CPU or GPU threads
+# type:uint64_t
+#threads = 0
+
+# Device type
+# type:string,["cpu"|"gpu"]
+#type = "gpu"
+
+[server]
+
+# Administriative REST requests requires this to be true, otherwise an error is returned.
+# type:bool
+#allow_control = false
+
+# If true, work requests may contain a numeric "priority" property to move ahead in the queue.
+# type:bool
+#allow_prioritization = false
+
+# Listening address for HTTP and WebSocket connections.
+# type:string,ip
+#bind = "::1"
+
+# Log to standard error in addition to file.
+# type:bool
+#log_to_stderr = false
+
+# Listening port for HTTP and WebSocket connections.
+# type:uint16
+#port = 8076
+
+# The maximum number of queued work requests. If the queue is full, work requests will result in an error.
+# type:uint32
+#request_limit = 16384
+
+# Number of IO threads used by the web server.
+# type:uint16
+#threads = 3
+
+[work]
+
+# Base work difficulty
+# type:string,hex
+#base_difficulty = "00000000000000002000000000000000"
+
+# If non-zero, the server simulates generating work for N seconds instead of
+# using a work device. Useful during testing of initial setup and debugging.
+# type:uint16
+#mock_work_generation_delay = 0
+
