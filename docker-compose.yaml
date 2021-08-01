@@ -22,6 +22,7 @@ services:
     restart: unless-stopped
     volumes:
       - ogmios-db:/db
+      - node-ipc:/ipc
 
   nanod:
     image: nanocurrency/nano:V22.1
