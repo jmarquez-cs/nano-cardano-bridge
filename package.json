@@ -22,7 +22,12 @@
   "homepage": "https://github.com/ScooterHelmet/nano-cardano-bridge#readme",
   "dependencies": {
     "@accept-nano/client": "^2.0.0",
+    "cardanocli-js": "^3.1.2",
     "express": "^4.17.1",
+    "firebase": "^8.8.1",
+    "firebase-admin": "^9.11.0",
+    "firebase-auth": "^0.1.2",
+    "firebase-functions": "^3.14.1",
     "helmet": "^4.6.0"
   },
   "engines": {
