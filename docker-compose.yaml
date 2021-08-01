@@ -53,6 +53,15 @@ services:
     volumes:
       - accept-nano:/opt/data
       
+  wa-bridge:
+    build: .
+    container_name: wa-bridge
+    hostname: wa-bridge
+    networks:
+      default:
+    ports: ["80:80"]
+    restart: unless-stopped
+    
 networks:
   default:
 
