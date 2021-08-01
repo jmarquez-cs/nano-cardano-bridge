@@ -1,3 +1,5 @@
+![staging](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+
 nano-cardano-bridge
 
 ## Service Endpoint(s)
