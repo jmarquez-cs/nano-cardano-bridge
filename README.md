@@ -1,4 +1,4 @@
-![staging](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+[![CI](https://github.com/ScooterHelmet/nano-cardano-bridge/actions/workflows/main.yml/badge.svg)](https://github.com/ScooterHelmet/nano-cardano-bridge/actions/workflows/main.yml)
 
 nano-cardano-bridge
 
