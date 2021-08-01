@@ -15,17 +15,19 @@ env:
 
 jobs:
   deploy:
-    name: Automatic Deploy
     runs-on: [ubuntu-latest]
     steps:
-    - id: gcloud_app_deploy
-      name: Checkout
+    - name: Checkout
       uses: actions/checkout@v2
       with:
         ref: ${{ env.GCP_PROJECT }}
-        
-      name: Deploy to app-engine
+
+    - name: Deploy to app-engine
       uses: google-github-actions/deploy-appengine@v0.4.0
       with:
         project_id: ${{ env.GCP_PROJECT }}
         service_account_key: ${{ env.GCP_SA_KEY }}
+        export_default_credentials: true
+
+    - name: Authorize Docker push
+      run: gcloud auth configure-docker
