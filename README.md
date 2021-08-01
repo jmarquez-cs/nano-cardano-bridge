@@ -1,3 +1,5 @@
+[![CI](https://github.com/ScooterHelmet/nano-cardano-bridge/actions/workflows/main.yml/badge.svg)](https://github.com/ScooterHelmet/nano-cardano-bridge/actions/workflows/main.yml)
+
 nano-cardano-bridge
 
 ## Service Endpoint(s)
