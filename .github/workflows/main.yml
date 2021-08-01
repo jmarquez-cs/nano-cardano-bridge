@@ -16,7 +16,7 @@ env:
 jobs:
   deploy:
     name: Automatic Deploy
-    runs-on: [self-hosted, linux]
+    runs-on: [ubuntu-latest]
     steps:
     - id: repo_checkout
       name: Checkout
