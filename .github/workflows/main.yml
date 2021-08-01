@@ -24,5 +24,6 @@ jobs:
       with:
         deliverables: app.yaml
         project_id: ${{ env.GCP_PROJECT }}
-        service_account_key: ${{ env.GCP_SA_KEY }}
-        export_default_credentials: true
+        credentials: ${{ env.GCP_SA_KEY }}
+        promote: false
+        version: v1
