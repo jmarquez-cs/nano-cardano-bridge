@@ -11,23 +11,30 @@ env:
   GCP_SA_EMAIL: ${{ secrets.WA_STAGE_GCP_SA_EMAIL }}
   GCP_SA_KEY: ${{ secrets.WA_STAGE_GCP_SA_KEY }}
   GCP_PROJECT: ${{ secrets.WA_STAGE_GCP_PROJECT_ID }}
-  ENVIRONMENT: ${{ github.event.client_payload.ENVIRONMENT }}
 
 jobs:
   deploy:
     runs-on: [ubuntu-latest]
     steps:
-    - name: Checkout
+    - name: checkout
       uses: actions/checkout@v2
+    
+    - name: set up gcloud
+      uses: google-github-actions/setup-gcloud@master
       with:
-        ref: ${{ env.GCP_PROJECT }}
-
-    - name: Deploy to app-engine
-      uses: google-github-actions/deploy-appengine@v0.4.0
-      with:
-        project_id: ${{ env.GCP_PROJECT }}
-        service_account_key: ${{ env.GCP_SA_KEY }}
+        project_id: ${{ secrets.WA_STAGE_GCP_PROJECT_ID }}
+        service_account_key: ${{ secrets.WA_STAGE_GCP_SA_KEY }}
         export_default_credentials: true
+    - name: deploy to app-engine
+      run: gcloud app deploy app.yaml --quiet --no-promote --version v1
+
+    # - name: deploy to app-engine
+    #   uses: google-github-actions/deploy-appengine@v0.4.0
+    #   with:
+    #     deliverables: app.yaml
+    #     project_id: ${{ env.GCP_PROJECT }}
+    #     service_account_key: ${{ env.GCP_SA_KEY }}
+    #     export_default_credentials: true
 
     - name: Authorize Docker push
       run: gcloud auth configure-docker
