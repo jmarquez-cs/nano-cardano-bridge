@@ -5,8 +5,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const helmet = require('helmet');
-const path = require('path');
-const port = 80;
+const port = process.env.PORT || 8080;
 
 app.use(helmet());
 
@@ -27,11 +26,13 @@ app.use(function (req, res, next) {
 });
 
 // static assets
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.get('/', (req, res) => {
+  res.send('online').status(200).end();
+});
 
 // webhook
 app.post('/hook', (req, res) => {
-  console.log(req.body) 
+  console.log(req.body)
   res.status(200).end();
 })
 
