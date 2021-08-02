@@ -1,3 +1,3 @@
 module.exports = {
-    BridgePairs: 'receipts'
+    BridgePairs: 'bridgePair'
 }
