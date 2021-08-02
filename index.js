@@ -5,13 +5,16 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const helmet = require('helmet');
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8081;
+const { getDb } = require('./firebase/firebase');
+const db = getDb();
+const { BridgePairs } = require('./firebase/collections');
+
+let _bridgePairs = [];
 
 app.use(helmet());
 
-// Configure Express to parse incoming JSON data
 app.use(express.json());
-
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: false, limit: '50mb' }));
 app.use(bodyParser.json());
@@ -25,23 +28,40 @@ app.use(function (req, res, next) {
   next();
 });
 
-// static assets
 app.get('/', (req, res) => {
   res.send('online').status(200).end();
 });
-
-// webhook
-app.post('/hook', (req, res) => {
-  console.log(req.body)
-  res.status(200).end();
-})
 
 // serve app
 const server = http.createServer(app);
 
 if (server != null) {
-  server.listen(port, () => {
-    console.log(`Application running on port: ${port}`);
+  server.listen(port, async () => {
+    console.log(`Application running on port: ${port}\n`);
+
+    try {
+      const bridgePairCollection = await db.collection(`${BridgePairs}`).get();
+      bridgePairCollection.docs.forEach(async receiptDoc => {
+
+        const waReceive = receiptDoc.data().waReceive;
+        const userReceive = receiptDoc.data().userReceive;
+        const waAsset = receiptDoc.data().waAsset;
+        const userAsset = receiptDoc.data().userAsset;
+
+        _bridgePairs.push({ 
+          waReceive: waReceive,
+          userReceive: userReceive,
+          waAsset: waAsset,
+          userAsset: userAsset
+        })
+        return;
+      })
+    } catch (error) {
+      throw error;
+    }
+    
+    console.log("\n-------------- Bridge Pairs -------------\n");
+    console.log(_bridgePairs);
   });
 }
 
