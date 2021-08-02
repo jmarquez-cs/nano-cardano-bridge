@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const helmet = require('helmet');
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 8080;
 const { getDb } = require('./firebase/firebase');
 const db = getDb();
 const { BridgePairs } = require('./firebase/collections');
