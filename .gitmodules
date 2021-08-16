@@ -1,0 +1,3 @@
+[submodule "nano-vanity"]
+	path = nano-vanity
+	url = https://github.com/PlasmaPower/nano-vanity
